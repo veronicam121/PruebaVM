@@ -1,0 +1,59 @@
+<div *ngIf="showCart">
+  <div class="hide-cart" (click)="hideCart()"></div>
+  <div class="wrap-header-cart trans">
+    <div class="hide-cart"></div>
+    <div class="header-cart trans">
+      <div class="header-cart-title">
+        <span class="header-cart-title-text">
+          Carrito
+        </span>
+        <div class="header-cart-close" (click)="hideCart()">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+
+      <div class="header-cart-content">
+        <ul class="header-cart-wrap-item container-fluid" *ngIf="cartProducts.length > 0">
+          <li class="header-cart-item row align-items-center" *ngFor="let product of cartProducts">
+            <i class="fas fa-times col-1 col-md-1 header-cart-item-del" (click)="deleteProduct(product)"></i>
+            <div class="header-cart-item-img col-5 col-md-3">
+              <img src="./assets/icons/placeholder.jpg" alt="IMG">
+            </div>
+            <div class="header-cart-item-txt col-5 col-md-4">
+              <a href="#" class="header-cart-item-name trans">
+                {{product.name}}
+              </a>
+              <span class="header-cart-item-info">
+                {{product.quantity}} x {{product.price}}
+              </span>
+            </div>
+            <div class="modal-form col-12 col-md-4">
+              <div class="modal-form-quantity">
+                <div class="modal-form-num-input">
+                  <div class="num-input-arrow trans num-arrow-down" (click)="subInput(product)">
+                    <i class="fas fa-minus"></i>
+                  </div>
+                  <input class="num-input" id="productNumber" type="number" value="product.quantity" [(ngModel)]="product.quantity">
+                  <div class="num-input-arrow trans num-arrow-up" (click)="addInput(product)">
+                    <i class="fas fa-plus"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <div class="full-width">
+          <div *ngIf="total!=undefined" class="header-cart-total">
+            Total: {{total | currency:'COP': 'symbol-narrow'}}
+          </div>
+          <div class="header-cart-buttons">
+            <a class="header-cart-button" (click)="updateCart()">
+              Actualizar Carrito
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

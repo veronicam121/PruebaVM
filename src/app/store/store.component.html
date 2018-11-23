@@ -1,0 +1,124 @@
+<!-- Header or Menu -->
+
+<header class="store-header">
+  <nav class="navbar navbar-light navbar-toggleable">
+    <img class="store-logo" (click)="restart()" src="./assets/icons/logo.png" alt="IMG-LOGO">
+    <div class="store-cart" (click)="showCart = !showCart">
+      <i class="fas fa-shopping-cart"></i>
+    </div>
+  </nav>
+</header>
+
+<!-- Shopping Cart -->
+<app-shopping-cart [showCart]="showCart" (closeCart)="hideCart($event)"></app-shopping-cart>
+
+<!-- BreadCrumb -->
+<div class="container-fluid">
+  <nav aria-label="breadcrumb" *ngIf="breadcrumb.length > 0">
+    <ol class="breadcrumb">
+      <li *ngFor="let crumb of breadcrumb" class="breadcrumb-item trans" (click)="goBack(crumb)">
+        {{crumb.name}}
+      </li>
+    </ol>
+  </nav>
+
+  <!-- Category Display -->
+  <div class="row" *ngIf="subLevel.length > 0 && selectedProducts === undefined">
+    <div *ngFor="let level of subLevel" class="category-list col-sm-6 col-md-4 col-lg-3">
+      <div class="category-card">
+        <img src="./assets/icons/placeholder.png" alt="Card image cap">
+        <a class="category-card-btn" (click)="selectSubLevel(level)">
+          <div class="flex-col-l">
+            <span class="category-card-name">{{level.name}}</span>
+            <span class="category-card-text">Buscar</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Section -->
+  <div *ngIf="selectedProducts !== undefined">
+
+    <!-- Filter Options and SearchBox -->
+
+    <!-- Buttons -->
+
+    <div class="row justify-content-end">
+      <div class="store-filter-buttons trans show-filters" (click)="showFilters = !showFilters ">
+        <i class="fas fa-bars"></i>
+        Filtrar
+      </div>
+      <div class="store-filter-buttons trans show-search-bar" (click)="showSearchBar = !showSearchBar">
+        <i class="fas fa-search"></i>
+        Buscar
+      </div>
+    </div>
+
+    <!--SearchBox Container -->
+
+    <div class="row justify-content-center search-bar" *ngIf="showSearchBar && !showFilters">
+      <input [(ngModel)]="searchText" placeholder="Buscar Producto">
+    </div>
+
+    <!--Filter Container-->
+
+    <div class="row justify-content-center filter-container" *ngIf="showFilters && !showSearchBar">
+      <div class="filter-col col-3">
+        <div class="filter-col-title">
+          Filtrar Por
+        </div>
+        <ul class="filter-col-option ">
+          <li (click)="resetFilter()"><a>Default</a></li>
+          <li (click)="filterByStock()"><a>Cantidad</a></li>
+          <li (click)="filterByAvailable()"><a>Disponibilidad</a></li>
+        </ul>
+      </div>
+      <div class="filter-col col-3 price">
+        <div class="filter-col-title">
+          Precio
+        </div>
+        <ul class="filter-col-option">
+          <li *ngFor="let price of prices" (click)="filterByPrice(price.low, price.high)"><a>{{price.value}}</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!--Product Display-->
+  <div class="row" *ngIf="selectedProducts !== undefined && filteredProducts === undefined">
+    <div *ngFor="let product of selectedProducts | filter: searchText" class="product-card col-sm-6 col-md-4 col-lg-3">
+      <div class="product-card-img">
+        <img src="./assets/icons/placeholder.png" alt="Card image cap">
+        <a class="product-card-btn trans" *ngIf="product.available" (click)="showProduct(product)">Mostrar mas
+        </a>
+      </div>
+      <div class="product-card">
+        <div class="product-card-name trans">{{product.name}}</div>
+        <div class="product-card-price">{{product.price}}</div>
+        <span class="product-not-available" *ngIf="!product.available">
+          No disponible
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!--Filtered Products-->
+  <div class="row" *ngIf="filteredProducts !== undefined ">
+    <div class="col-3 alert alert-dark" role="alert" *ngIf="filteredProducts.length === 0">
+      No se encontraron productos.
+    </div>
+    <div *ngFor="let product of filteredProducts | filter: searchText" class="product-card col-sm-6 col-md-4 col-lg-3">
+      <div class="product-card-img">
+        <img src="./assets/icons/placeholder.png" alt="Card image cap">
+        <a class="product-card-btn trans" (click)="showProduct(product)">Mostrar mas
+        </a>
+      </div>
+      <div class="product-card">
+        <div class="product-card-name trans">{{product.name}}</div>
+        <div class="product-card-price">{{product.price}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-product-modal [modalProduct]="modalProduct" (closeModal)="hideModal($event)"></app-product-modal>

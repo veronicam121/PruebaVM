@@ -1,0 +1,51 @@
+<!--Modal-->
+<div class="modal-product trans" id="productoModal" *ngIf="modalProduct != undefined">
+  <div class="overlay-modal" (click)="hideModal()"></div>
+  <div class="container modal-container">
+    <div class="inside-modal">
+      <button class="hide-modal-button trans" aria-label="Close" (click)="hideModal()">
+        <img src="./assets/icons/icon-close.png" alt="CLOSE">
+      </button>
+      <div class="row">
+        <div class="col-md-6 col-lg-6">
+          <div class="modal-gallery">
+            <img src="./assets/icons/placeholder.png" alt="Card image cap">
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-6">
+          <div class="modal-product-info">
+            <h4 class="modal-product-name">
+              {{modalProduct.name}}
+            </h4>
+            <span class="modal-product-price">
+              {{modalProduct.price}}
+            </span>
+            <p class="modal-product-description">
+              Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris
+              consequat ornare feugiat.
+            </p>
+            <div class="modal-form">
+              <form #addToCart="ngForm" (ngSubmit)="buyProduct(modalProduct, countInput)">
+                <div class="modal-form-quantity">
+                  <div class="modal-form-num-input">
+                    <div class="num-input-arrow trans num-arrow-down" (click)="subInput(modalProduct)">
+                      <i class="fas fa-minus"></i>
+                    </div>
+                    <input class="num-input" id="productNumber" type="number" name="countInput" [(ngModel)]="countInput"
+                      value="1">
+                    <div class="num-input-arrow trans num-arrow-up" (click)="addInput()">
+                      <i class="fas fa-plus"></i>
+                    </div>
+                  </div>
+                  <button [disabled]="!modalProduct.available" class="add-to-cart-button trans">
+                    Agregar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

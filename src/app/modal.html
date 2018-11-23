@@ -1,0 +1,54 @@
+<ng-template #content let-modal>
+    <div class="modal-producto modal fade" id="productoModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div clas="container-fluid">
+                    <div class="hide-modal">
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-lg-7">
+                            <div class="modal-gallery">
+                                PICTURE HERE
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-5">
+                            <div class="modal-product">
+                                <h4 class="modal-product-name">
+                                    {{producto.name}}
+                                </h4>
+                                <span class="modal-producto-price">
+                                    {{producto.price}}
+                                </span>
+                                <span class="modal-producto-description">
+                                    Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris
+                                    consequat ornare feugiat.
+                                </span>
+                                <div class="modal-form">
+                                    <div class="modal-form-quantity" *ngIf="producto.available">
+                                        <div class="modal-form-label">
+                                            Cantidad
+                                        </div>
+                                        <div class="btn-group modal-form-dropdown">
+                                            <button class="dropdown-button btn btn-primary dropdown-toggle"
+                                                aria-controls="dropdown-basic">
+                                                Elegir Cantidad
+                                            </button>
+                                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
+                                                aria-labelledby="button-basic">
+                                                <li role="menu-item" *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10]">{{number}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
